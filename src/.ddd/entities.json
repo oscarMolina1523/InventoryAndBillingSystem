@@ -1,0 +1,804 @@
+{
+  "models": [
+    {
+      "name": "Plan",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "price",
+          "type": "number"
+        },
+        {
+          "name": "deleted",
+          "type": "boolean"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "type": "string"
+        },
+        {
+          "name": "updatedBy",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "Suscription",
+      "fields": [
+        {
+          "name": "company_id",
+          "type": "string"
+        },
+        {
+          "name": "plan_id",
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "type": "string"
+        },
+        {
+          "name": "current_period_start",
+          "type": "Date"
+        },
+        {
+          "name": "current_period_end",
+          "type": "Date"
+        },
+        {
+          "name": "deleted",
+          "type": "boolean"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "type": "string"
+        },
+        {
+          "name": "updatedBy",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "Companie",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "business_type",
+          "type": "string"
+        },
+        {
+          "name": "tax_id",
+          "type": "string"
+        },
+        {
+          "name": "email",
+          "type": "string"
+        },
+        {
+          "name": "phone",
+          "type": "string"
+        },
+        {
+          "name": "deleted",
+          "type": "boolean"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "type": "string"
+        },
+        {
+          "name": "updatedBy",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "Unit",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "symbol",
+          "type": "string"
+        },
+        {
+          "name": "deleted",
+          "type": "boolean"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "type": "string"
+        },
+        {
+          "name": "updatedBy",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "Branch",
+      "fields": [
+        {
+          "name": "company_id",
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "address",
+          "type": "string"
+        },
+        {
+          "name": "phone",
+          "type": "string"
+        },
+        {
+          "name": "deleted",
+          "type": "boolean"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "type": "string"
+        },
+        {
+          "name": "updatedBy",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "Role",
+      "fields": [
+        {
+          "name": "company_id",
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "deleted",
+          "type": "boolean"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "type": "string"
+        },
+        {
+          "name": "updatedBy",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "Categorie",
+      "fields": [
+        {
+          "name": "company_id",
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "deleted",
+          "type": "boolean"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "type": "string"
+        },
+        {
+          "name": "updatedBy",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "fields": [
+        {
+          "name": "company_id",
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "email",
+          "type": "string"
+        },
+        {
+          "name": "password",
+          "type": "string"
+        },
+        {
+          "name": "role_id",
+          "type": "string"
+        },
+        {
+          "name": "is_active",
+          "type": "boolean"
+        },
+        {
+          "name": "deleted",
+          "type": "boolean"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "type": "string"
+        },
+        {
+          "name": "updatedBy",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "Product",
+      "fields": [
+        {
+          "name": "company_id",
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "barcode",
+          "type": "string"
+        },
+        {
+          "name": "category_id",
+          "type": "string"
+        },
+        {
+          "name": "unit_id",
+          "type": "string"
+        },
+        {
+          "name": "cost_price",
+          "type": "number"
+        },
+        {
+          "name": "sale_price",
+          "type": "number"
+        },
+        {
+          "name": "track_inventory",
+          "type": "boolean"
+        },
+        {
+          "name": "deleted",
+          "type": "boolean"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "type": "string"
+        },
+        {
+          "name": "updatedBy",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "CashRegister",
+      "fields": [
+        {
+          "name": "company_id",
+          "type": "string"
+        },
+        {
+          "name": "branch_id",
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "is_active",
+          "type": "boolean"
+        },
+        {
+          "name": "deleted",
+          "type": "boolean"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "type": "string"
+        },
+        {
+          "name": "updatedBy",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "Purchase",
+      "fields": [
+        {
+          "name": "company_id",
+          "type": "string"
+        },
+        {
+          "name": "branch_id",
+          "type": "string"
+        },
+        {
+          "name": "supplier",
+          "type": "string"
+        },
+        {
+          "name": "total",
+          "type": "number"
+        },
+        {
+          "name": "status",
+          "type": "string"
+        },
+        {
+          "name": "deleted",
+          "type": "boolean"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "type": "string"
+        },
+        {
+          "name": "updatedBy",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "PurchaseItem",
+      "fields": [
+        {
+          "name": "company_id",
+          "type": "string"
+        },
+        {
+          "name": "purchase_id",
+          "type": "string"
+        },
+        {
+          "name": "product_id",
+          "type": "string"
+        },
+        {
+          "name": "unit_id",
+          "type": "string"
+        },
+        {
+          "name": "quantity",
+          "type": "number"
+        },
+        {
+          "name": "cost_price",
+          "type": "number"
+        },
+        {
+          "name": "subtotal",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "CashMovement",
+      "fields": [
+        {
+          "name": "company_id",
+          "type": "string"
+        },
+        {
+          "name": "cash_register_id",
+          "type": "string"
+        },
+        {
+          "name": "type",
+          "type": "string"
+        },
+        {
+          "name": "amount",
+          "type": "number"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "reference_id",
+          "type": "string"
+        },
+        {
+          "name": "payment_method",
+          "type": "string"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "type": "string"
+        },
+        {
+          "name": "updatedBy",
+          "type": "string"
+        },
+        {
+          "name": "deleted",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "Sale",
+      "fields": [
+        {
+          "name": "company_id",
+          "type": "string"
+        },
+        {
+          "name": "branch_id",
+          "type": "string"
+        },
+        {
+          "name": "user_id",
+          "type": "string"
+        },
+        {
+          "name": "customer_name",
+          "type": "string"
+        },
+        {
+          "name": "total",
+          "type": "number"
+        },
+        {
+          "name": "status",
+          "type": "string"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "type": "string"
+        },
+        {
+          "name": "updatedBy",
+          "type": "string"
+        },
+        {
+          "name": "deleted",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "Inventorie",
+      "fields": [
+        {
+          "name": "company_id",
+          "type": "string"
+        },
+        {
+          "name": "branch_id",
+          "type": "string"
+        },
+        {
+          "name": "product_id",
+          "type": "string"
+        },
+        {
+          "name": "quantity",
+          "type": "number"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "type": "string"
+        },
+        {
+          "name": "updatedBy",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "InventoryMovement",
+      "fields": [
+        {
+          "name": "company_id",
+          "type": "string"
+        },
+        {
+          "name": "branch_id",
+          "type": "string"
+        },
+        {
+          "name": "product_id",
+          "type": "string"
+        },
+        {
+          "name": "type",
+          "type": "string"
+        },
+        {
+          "name": "quantity",
+          "type": "number"
+        },
+        {
+          "name": "reference_type",
+          "type": "string"
+        },
+        {
+          "name": "reference_id",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "type": "string"
+        },
+        {
+          "name": "updatedBy",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "ProductUnit",
+      "fields": [
+        {
+          "name": "product_id",
+          "type": "string"
+        },
+        {
+          "name": "unit_id",
+          "type": "string"
+        },
+        {
+          "name": "factor",
+          "type": "number"
+        },
+        {
+          "name": "is_base",
+          "type": "boolean"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "type": "string"
+        },
+        {
+          "name": "updatedBy",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "SaleItem",
+      "fields": [
+        {
+          "name": "company_id",
+          "type": "string"
+        },
+        {
+          "name": "sale_id",
+          "type": "string"
+        },
+        {
+          "name": "product_id",
+          "type": "string"
+        },
+        {
+          "name": "unit_id",
+          "type": "string"
+        },
+        {
+          "name": "quantity",
+          "type": "number"
+        },
+        {
+          "name": "price",
+          "type": "number"
+        },
+        {
+          "name": "subtotal",
+          "type": "number"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "type": "string"
+        },
+        {
+          "name": "updatedBy",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "Log",
+      "fields": [
+        {
+          "name": "entity",
+          "type": "string"
+        },
+        {
+          "name": "entity_id",
+          "type": "string"
+        },
+        {
+          "name": "action",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "performed_by",
+          "type": "string"
+        },
+        {
+          "name": "performed_at",
+          "type": "Date"
+        }
+      ]
+    }
+  ],
+  "databaseProvider": "turso"
+}
