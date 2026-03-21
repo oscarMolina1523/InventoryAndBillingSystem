@@ -134,5 +134,33 @@ export const CategoryPaths = {
         }
       }
     }
-  }
+  },
+  
+  "/category/company/{companyId}": {
+    get: {
+      summary: "Get Category by company ID",
+      tags: ["Category"],
+      parameters: [
+        {
+          name: "companyId",
+          in: "path",
+          required: true,
+          schema: { type: "string" },
+        },
+      ],
+      responses: {
+        200: {
+          description: "Branch found",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Category" },
+            },
+          },
+        },
+        404: {
+          description: "Not found",
+        },
+      },
+    },
+  },
 };

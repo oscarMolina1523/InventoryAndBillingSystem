@@ -12,25 +12,29 @@ export class CategoryService implements ICategoryService {
   constructor(@inject("ICategoryRepository") repository: ICategoryRepository) {
     this._categoryRepository = repository;
   }
-  
+
   async findAll(page: number = 1, pageSize: number = 100): Promise<Category[]> {
     return await this._categoryRepository.findAll(page, pageSize);
   }
-  
-  async findById(id: string) : Promise<Category | null> {
+
+  async findById(id: string): Promise<Category | null> {
     return await this._categoryRepository.findById(id);
   }
-  
+
+  async getByCompany(companyId: string): Promise<Category | null> {
+    return await this._categoryRepository.findByField("company_id", companyId);
+  }
+
   async create(data: CategoryDto): Promise<Category> {
     const now = new Date();
     const newData: Category = {
       ...data,
-      id: generateId(), 
+      id: generateId(),
       createdAt: now,
-      updatedAt: now, 
-      createdBy: "system", 
-      updatedBy: "system", 
-    }
+      updatedAt: now,
+      createdBy: "system",
+      updatedBy: "system",
+    };
     await this._categoryRepository.create(newData);
     return newData;
   }
@@ -44,20 +48,20 @@ export class CategoryService implements ICategoryService {
     const now = new Date();
     const newData: Category = {
       ...data,
-      id, 
+      id,
       createdAt: now,
-      updatedAt: now, 
-      createdBy: "system", 
-      updatedBy: "system", 
-    }
+      updatedAt: now,
+      createdBy: "system",
+      updatedBy: "system",
+    };
     await this._categoryRepository.update(newData);
     return newData;
   }
 
-  async delete(id: string) : Promise<void> {
+  async delete(id: string): Promise<void> {
     const existing = await this._categoryRepository.findById(id);
     if (!existing) {
-      return ;
+      return;
     }
     return await this._categoryRepository.delete(existing);
   }
