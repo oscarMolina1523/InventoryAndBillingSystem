@@ -29,7 +29,7 @@ export class SuscriptionController {
     res.json(result);
   }
 
-  getProductByCompany = async (req: Request, res: Response) => {
+  getSuscriptionByCompany = async (req: Request, res: Response) => {
     //http://localhost:3000/users/company/123
 
     const companyId = req.params.companyId;

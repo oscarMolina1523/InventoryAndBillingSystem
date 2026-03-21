@@ -29,6 +29,28 @@ export class BranchController {
     res.json(result);
   }
 
+  getBranchByCompany = async (req: Request, res: Response) => {
+    //http://localhost:3000/users/company/123
+
+    const companyId = req.params.companyId;
+
+    if (!companyId || typeof companyId !== "string") {
+      return res.status(400).json({ message: "Invalid Company ID." });
+    }
+
+    try {
+      const product = await this._branchService.getByCompany(companyId);
+
+      if (product) {
+        res.status(200).json({ success: true, data: product });
+      } else {
+        res.status(404).json({ message: "Branch not found" });
+      }
+    } catch {
+      res.status(500).json({ message: "Failed to get branch" });
+    }
+  };
+
   update= async (req: Request, res: Response)=> {
     const id = req.params.id as string;
     const result = await this._branchService.update(id, req.body);

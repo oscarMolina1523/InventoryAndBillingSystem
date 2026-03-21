@@ -8,7 +8,7 @@ const controller = container.resolve(SuscriptionController);
 router.post("/", controller.create);
 router.get("/", controller.getAll);
 router.get("/:id", controller.getById);
-router.get("/company/:companyId", controller.getProductByCompany);
+router.get("/company/:companyId", controller.getSuscriptionByCompany);
 router.put("/:id", controller.update);
 router.delete("/:id", controller.delete);
 

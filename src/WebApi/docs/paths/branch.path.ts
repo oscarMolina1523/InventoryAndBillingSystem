@@ -134,5 +134,33 @@ export const BranchPaths = {
         }
       }
     }
-  }
+  },
+
+  "/branch/company/{companyId}": {
+    get: {
+      summary: "Get Branch by company ID",
+      tags: ["Branch"],
+      parameters: [
+        {
+          name: "companyId",
+          in: "path",
+          required: true,
+          schema: { type: "string" },
+        },
+      ],
+      responses: {
+        200: {
+          description: "Branch found",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Branch" },
+            },
+          },
+        },
+        404: {
+          description: "Not found",
+        },
+      },
+    },
+  },
 };
