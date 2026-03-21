@@ -134,5 +134,33 @@ export const SuscriptionPaths = {
         }
       }
     }
-  }
+  },
+
+  "/suscription/company/{companyId}": {
+    get: {
+      summary: "Get Suscription by company ID",
+      tags: ["Suscription"],
+      parameters: [
+        {
+          name: "companyId",
+          in: "path",
+          required: true,
+          schema: { type: "string" },
+        },
+      ],
+      responses: {
+        200: {
+          description: "Suscription found",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Suscription" },
+            },
+          },
+        },
+        404: {
+          description: "Not found",
+        },
+      },
+    },
+  },
 };

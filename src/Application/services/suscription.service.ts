@@ -9,28 +9,37 @@ import { generateId } from "../../shared/utils/generateId";
 export class SuscriptionService implements ISuscriptionService {
   private readonly _suscriptionRepository: ISuscriptionRepository;
 
-  constructor(@inject("ISuscriptionRepository") repository: ISuscriptionRepository) {
+  constructor(
+    @inject("ISuscriptionRepository") repository: ISuscriptionRepository,
+  ) {
     this._suscriptionRepository = repository;
   }
-  
-  async findAll(page: number = 1, pageSize: number = 100): Promise<Suscription[]> {
+
+  async findAll(
+    page: number = 1,
+    pageSize: number = 100,
+  ): Promise<Suscription[]> {
     return await this._suscriptionRepository.findAll(page, pageSize);
   }
-  
-  async findById(id: string) : Promise<Suscription | null> {
+
+  async findById(id: string): Promise<Suscription | null> {
     return await this._suscriptionRepository.findById(id);
   }
-  
+
+  async getByCompany(companyId: string): Promise<Suscription | null> {
+    return await this._suscriptionRepository.findByField("company_id", companyId);
+  }
+
   async create(data: SuscriptionDto): Promise<Suscription> {
     const now = new Date();
     const newData: Suscription = {
       ...data,
-      id: generateId(), 
+      id: generateId(),
       createdAt: now,
-      updatedAt: now, 
-      createdBy: "system", 
-      updatedBy: "system", 
-    }
+      updatedAt: now,
+      createdBy: "system",
+      updatedBy: "system",
+    };
     await this._suscriptionRepository.create(newData);
     return newData;
   }
@@ -44,20 +53,20 @@ export class SuscriptionService implements ISuscriptionService {
     const now = new Date();
     const newData: Suscription = {
       ...data,
-      id, 
+      id,
       createdAt: now,
-      updatedAt: now, 
-      createdBy: "system", 
-      updatedBy: "system", 
-    }
+      updatedAt: now,
+      createdBy: "system",
+      updatedBy: "system",
+    };
     await this._suscriptionRepository.update(newData);
     return newData;
   }
 
-  async delete(id: string) : Promise<void> {
+  async delete(id: string): Promise<void> {
     const existing = await this._suscriptionRepository.findById(id);
     if (!existing) {
-      return ;
+      return;
     }
     return await this._suscriptionRepository.delete(existing);
   }

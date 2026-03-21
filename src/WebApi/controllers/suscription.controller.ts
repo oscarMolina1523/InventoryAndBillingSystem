@@ -29,6 +29,28 @@ export class SuscriptionController {
     res.json(result);
   }
 
+  getProductByCompany = async (req: Request, res: Response) => {
+    //http://localhost:3000/users/company/123
+
+    const companyId = req.params.companyId;
+
+    if (!companyId || typeof companyId !== "string") {
+      return res.status(400).json({ message: "Invalid Company ID." });
+    }
+
+    try {
+      const product = await this._suscriptionService.getByCompany(companyId);
+
+      if (product) {
+        res.status(200).json({ success: true, data: product });
+      } else {
+        res.status(404).json({ message: "Suscription not found" });
+      }
+    } catch {
+      res.status(500).json({ message: "Failed to get suscription" });
+    }
+  };
+
   update= async (req: Request, res: Response)=> {
     const id = req.params.id as string;
     const result = await this._suscriptionService.update(id, req.body);
