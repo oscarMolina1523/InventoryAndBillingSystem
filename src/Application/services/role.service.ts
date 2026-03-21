@@ -20,6 +20,10 @@ export class RoleService implements IRoleService {
   async findById(id: string) : Promise<Role | null> {
     return await this._roleRepository.findById(id);
   }
+
+  async getByCompany(companyId: string): Promise<Role | null> {
+      return await this._roleRepository.findByField("company_id", companyId);
+    }
   
   async create(data: RoleDto): Promise<Role> {
     const now = new Date();

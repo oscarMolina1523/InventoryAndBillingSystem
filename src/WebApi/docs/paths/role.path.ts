@@ -134,5 +134,33 @@ export const RolePaths = {
         }
       }
     }
-  }
+  },
+
+  "/role/company/{companyId}": {
+    get: {
+      summary: "Get Role by company ID",
+      tags: ["Role"],
+      parameters: [
+        {
+          name: "companyId",
+          in: "path",
+          required: true,
+          schema: { type: "string" },
+        },
+      ],
+      responses: {
+        200: {
+          description: "Suscription found",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/Role" },
+            },
+          },
+        },
+        404: {
+          description: "Not found",
+        },
+      },
+    },
+  },
 };
