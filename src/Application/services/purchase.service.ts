@@ -20,6 +20,13 @@ export class PurchaseService implements IPurchaseService {
   async findById(id: string) : Promise<Purchase | null> {
     return await this._purchaseRepository.findById(id);
   }
+
+  async getByCompany(companyId: string): Promise<Purchase[]> {
+      return await this._purchaseRepository.findByField(
+        "company_id",
+        companyId,
+      );
+    }
   
   async create(data: PurchaseDto): Promise<Purchase> {
     const now = new Date();

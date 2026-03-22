@@ -29,6 +29,28 @@ export class PurchaseController {
     res.json(result);
   }
 
+  getPurchaseByCompany = async (req: Request, res: Response) => {
+    //http://localhost:3000/users/company/123
+
+    const companyId = req.params.companyId;
+
+    if (!companyId || typeof companyId !== "string") {
+      return res.status(400).json({ message: "Invalid Company ID." });
+    }
+
+    try {
+      const purchases = await this._purchaseService.getByCompany(companyId);
+
+      if (purchases) {
+        res.status(200).json({ success: true, data: purchases });
+      } else {
+        res.status(404).json({ message: "Purchases not found" });
+      }
+    } catch {
+      res.status(500).json({ message: "Failed to get purchases" });
+    }
+  };
+
   update= async (req: Request, res: Response)=> {
     const id = req.params.id as string;
     const result = await this._purchaseService.update(id, req.body);

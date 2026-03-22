@@ -134,5 +134,36 @@ export const PurchasePaths = {
         }
       }
     }
-  }
+  },
+
+  "/purchase/company/{companyId}": {
+    get: {
+      summary: "Get Purchase by company ID",
+      tags: ["Purchase"],
+      parameters: [
+        {
+          name: "companyId",
+          in: "path",
+          required: true,
+          schema: { type: "string" },
+        },
+      ],
+      responses: {
+        200: {
+          description: "Purchases found",
+          content: {
+            "application/json": {
+              schema:{
+                type: "array",
+                items: { $ref: "#/components/schemas/Purchase" },
+              }
+            },
+          },
+        },
+        404: {
+          description: "Not found",
+        },
+      },
+    },
+  },
 };
