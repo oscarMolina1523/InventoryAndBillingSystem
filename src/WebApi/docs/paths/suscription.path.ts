@@ -153,7 +153,10 @@ export const SuscriptionPaths = {
           description: "Suscription found",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/Suscription" },
+              schema:{
+                type: "array",
+                items: { $ref: "#/components/schemas/Suscription" },
+              }
             },
           },
         },

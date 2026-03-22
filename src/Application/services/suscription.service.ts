@@ -26,7 +26,7 @@ export class SuscriptionService implements ISuscriptionService {
     return await this._suscriptionRepository.findById(id);
   }
 
-  async getByCompany(companyId: string): Promise<Suscription | null> {
+  async getByCompany(companyId: string): Promise<Suscription[]> {
     return await this._suscriptionRepository.findByField("company_id", companyId);
   }
 

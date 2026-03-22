@@ -85,7 +85,7 @@ export class SuscriptionRepository implements ISuscriptionRepository {
     } as Suscription;
   }
 
-  async findByField(field: string, value: string): Promise<Suscription | null> {
+  async findByField(field: string, value: string): Promise<Suscription[]> {
     const builder = this._operationBuilder!.Initialize(
       EntityType.Suscription,
     ).WithOperation(SqlReadOperation.SelectByField);
@@ -94,22 +94,25 @@ export class SuscriptionRepository implements ISuscriptionRepository {
 
     const readCommand = builder.WithField(field, value).BuildReader();
 
-    const row = await this._connection.executeScalar(readCommand);
-    if (!row) return null;
+    const rows = await this._connection.executeQuery(readCommand);
+    if (!rows || rows.length === 0) return [];
 
-    return {
-      id: row["ID"],
-      company_id: row["COMPANY_ID"],
-      plan_id: row["PLAN_ID"],
-      status: row["STATUS"],
-      current_period_start: row["CURRENT_PERIOD_START"],
-      current_period_end: row["CURRENT_PERIOD_END"],
-      deleted: row["DELETED"],
-      createdAt: row["CREATEDAT"],
-      updatedAt: row["UPDATEDAT"],
-      createdBy: row["CREATEDBY"],
-      updatedBy: row["UPDATEDBY"],
-    } as Suscription;
+    return rows.map(
+      (row) =>
+        ({
+          id: row["ID"],
+          company_id: row["COMPANY_ID"],
+          plan_id: row["PLAN_ID"],
+          status: row["STATUS"],
+          current_period_start: row["CURRENT_PERIOD_START"],
+          current_period_end: row["CURRENT_PERIOD_END"],
+          deleted: row["DELETED"],
+          createdAt: row["CREATEDAT"],
+          updatedAt: row["UPDATEDAT"],
+          createdBy: row["CREATEDBY"],
+          updatedBy: row["UPDATEDBY"],
+        }) as Suscription,
+    );
   }
 
   async create(entity: Suscription): Promise<void> {

@@ -39,10 +39,10 @@ export class SuscriptionController {
     }
 
     try {
-      const product = await this._suscriptionService.getByCompany(companyId);
+      const suscriptions = await this._suscriptionService.getByCompany(companyId);
 
-      if (product) {
-        res.status(200).json({ success: true, data: product });
+      if (suscriptions) {
+        res.status(200).json({ success: true, data: suscriptions });
       } else {
         res.status(404).json({ message: "Suscription not found" });
       }
