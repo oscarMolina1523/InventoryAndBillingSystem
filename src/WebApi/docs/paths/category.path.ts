@@ -153,7 +153,10 @@ export const CategoryPaths = {
           description: "Branch found",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/Category" },
+              schema:{
+                type: "array",
+                items: { $ref: "#/components/schemas/Category" },
+              }
             },
           },
         },

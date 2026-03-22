@@ -39,10 +39,10 @@ export class CategoryController {
     }
 
     try {
-      const product = await this._categoryService.getByCompany(companyId);
+      const categories = await this._categoryService.getByCompany(companyId);
 
-      if (product) {
-        res.status(200).json({ success: true, data: product });
+      if (categories) {
+        res.status(200).json({ success: true, data: categories });
       } else {
         res.status(404).json({ message: "Category not found" });
       }

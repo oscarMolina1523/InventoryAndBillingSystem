@@ -21,7 +21,7 @@ export class CategoryService implements ICategoryService {
     return await this._categoryRepository.findById(id);
   }
 
-  async getByCompany(companyId: string): Promise<Category | null> {
+  async getByCompany(companyId: string): Promise<Category[]> {
     return await this._categoryRepository.findByField("company_id", companyId);
   }
 
