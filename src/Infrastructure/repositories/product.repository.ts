@@ -88,7 +88,7 @@ export class ProductRepository implements IProductRepository {
     } as Product;
   }
 
-  async findByField(field: string, value: string): Promise<Product | null> {
+  async findByField(field: string, value: string): Promise<Product[]> {
     const builder = this._operationBuilder!.Initialize(
       EntityType.Product,
     ).WithOperation(SqlReadOperation.SelectByField);
@@ -97,25 +97,28 @@ export class ProductRepository implements IProductRepository {
 
     const readCommand = builder.WithField(field, value).BuildReader();
 
-    const row = await this._connection.executeScalar(readCommand);
-    if (!row) return null;
+    const rows = await this._connection.executeQuery(readCommand);
+    if (!rows || rows.length === 0) return [];
 
-    return {
-      id: row["ID"],
-      company_id: row["COMPANY_ID"],
-      name: row["NAME"],
-      barcode: row["BARCODE"],
-      category_id: row["CATEGORY_ID"],
-      unit_id: row["UNIT_ID"],
-      cost_price: row["COST_PRICE"],
-      sale_price: row["SALE_PRICE"],
-      track_inventory: row["TRACK_INVENTORY"],
-      deleted: row["DELETED"],
-      createdAt: row["CREATEDAT"],
-      updatedAt: row["UPDATEDAT"],
-      createdBy: row["CREATEDBY"],
-      updatedBy: row["UPDATEDBY"],
-    } as Product;
+    return rows.map(
+      (row) =>
+        ({
+          id: row["ID"],
+          company_id: row["COMPANY_ID"],
+          name: row["NAME"],
+          barcode: row["BARCODE"],
+          category_id: row["CATEGORY_ID"],
+          unit_id: row["UNIT_ID"],
+          cost_price: row["COST_PRICE"],
+          sale_price: row["SALE_PRICE"],
+          track_inventory: row["TRACK_INVENTORY"],
+          deleted: row["DELETED"],
+          createdAt: row["CREATEDAT"],
+          updatedAt: row["UPDATEDAT"],
+          createdBy: row["CREATEDBY"],
+          updatedBy: row["UPDATEDBY"],
+        }) as Product,
+    );
   }
 
   async create(entity: Product): Promise<void> {

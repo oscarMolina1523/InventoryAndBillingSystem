@@ -38,10 +38,10 @@ export class ProductController {
     }
 
     try {
-      const product = await this._productService.getByCompany(companyId);
+      const products = await this._productService.getByCompany(companyId);
 
-      if (product) {
-        res.status(200).json({ success: true, data: product });
+      if (products) {
+        res.status(200).json({ success: true, data: products });
       } else {
         res.status(404).json({ message: "Product not found" });
       }

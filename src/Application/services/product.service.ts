@@ -21,7 +21,7 @@ export class ProductService implements IProductService {
     return await this._productRepository.findById(id);
   }
 
-  async getByCompany(companyId: string): Promise<Product | null> {
+  async getByCompany(companyId: string): Promise<Product []> {
     return await this._productRepository.findByField("company_id", companyId);
   }
   

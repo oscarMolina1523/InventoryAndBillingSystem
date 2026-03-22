@@ -153,7 +153,10 @@ export const ProductPaths = {
           description: "Product found",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/Product" },
+              schema: {
+                type: "array",
+                items: { $ref: "#/components/schemas/Product" },
+              },
             },
           },
         },
