@@ -8,6 +8,7 @@ const controller = container.resolve(CashRegisterController);
 router.post("/", controller.create);
 router.get("/", controller.getAll);
 router.get("/:id", controller.getById);
+router.get("/company/:companyId", controller.getCashRegisterByCompany);
 router.put("/:id", controller.update);
 router.delete("/:id", controller.delete);
 

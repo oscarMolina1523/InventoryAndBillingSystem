@@ -29,6 +29,29 @@ export class CashRegisterController {
     res.json(result);
   }
 
+  getCashRegisterByCompany = async (req: Request, res: Response) => {
+    //http://localhost:3000/users/company/123
+
+    const companyId = req.params.companyId;
+
+    if (!companyId || typeof companyId !== "string") {
+      return res.status(400).json({ message: "Invalid Company ID." });
+    }
+
+    try {
+      const cashRegisters = await this._cashregisterService.getByCompany(companyId);
+
+      if (cashRegisters) {
+        res.status(200).json({ success: true, data: cashRegisters });
+      } else {
+        res.status(404).json({ message: "Cash register not found" });
+      }
+    } catch {
+      res.status(500).json({ message: "Failed to get cash register" });
+    }
+  };
+
+
   update= async (req: Request, res: Response)=> {
     const id = req.params.id as string;
     const result = await this._cashregisterService.update(id, req.body);

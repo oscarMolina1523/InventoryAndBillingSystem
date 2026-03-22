@@ -9,33 +9,48 @@ import { generateId } from "../../shared/utils/generateId";
 export class CashRegisterService implements ICashRegisterService {
   private readonly _cashregisterRepository: ICashRegisterRepository;
 
-  constructor(@inject("ICashRegisterRepository") repository: ICashRegisterRepository) {
+  constructor(
+    @inject("ICashRegisterRepository") repository: ICashRegisterRepository,
+  ) {
     this._cashregisterRepository = repository;
   }
-  
-  async findAll(page: number = 1, pageSize: number = 100): Promise<CashRegister[]> {
+
+  async findAll(
+    page: number = 1,
+    pageSize: number = 100,
+  ): Promise<CashRegister[]> {
     return await this._cashregisterRepository.findAll(page, pageSize);
   }
-  
-  async findById(id: string) : Promise<CashRegister | null> {
+
+  async findById(id: string): Promise<CashRegister | null> {
     return await this._cashregisterRepository.findById(id);
   }
-  
+
+  async getByCompany(companyId: string): Promise<CashRegister[]> {
+    return await this._cashregisterRepository.findByField(
+      "company_id",
+      companyId,
+    );
+  }
+
   async create(data: CashRegisterDto): Promise<CashRegister> {
     const now = new Date();
     const newData: CashRegister = {
       ...data,
-      id: generateId(), 
+      id: generateId(),
       createdAt: now,
-      updatedAt: now, 
-      createdBy: "system", 
-      updatedBy: "system", 
-    }
+      updatedAt: now,
+      createdBy: "system",
+      updatedBy: "system",
+    };
     await this._cashregisterRepository.create(newData);
     return newData;
   }
 
-  async update(id: string, data: CashRegisterDto): Promise<CashRegister | null> {
+  async update(
+    id: string,
+    data: CashRegisterDto,
+  ): Promise<CashRegister | null> {
     const existing = await this._cashregisterRepository.findById(id);
     if (!existing) {
       return null;
@@ -44,20 +59,20 @@ export class CashRegisterService implements ICashRegisterService {
     const now = new Date();
     const newData: CashRegister = {
       ...data,
-      id, 
+      id,
       createdAt: now,
-      updatedAt: now, 
-      createdBy: "system", 
-      updatedBy: "system", 
-    }
+      updatedAt: now,
+      createdBy: "system",
+      updatedBy: "system",
+    };
     await this._cashregisterRepository.update(newData);
     return newData;
   }
 
-  async delete(id: string) : Promise<void> {
+  async delete(id: string): Promise<void> {
     const existing = await this._cashregisterRepository.findById(id);
     if (!existing) {
-      return ;
+      return;
     }
     return await this._cashregisterRepository.delete(existing);
   }

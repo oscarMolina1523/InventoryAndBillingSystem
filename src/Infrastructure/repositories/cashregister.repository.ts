@@ -83,6 +83,35 @@ export class CashRegisterRepository implements ICashRegisterRepository {
     } as CashRegister;
   }
 
+  async findByField(field: string, value: string): Promise<CashRegister[]> {
+    const builder = this._operationBuilder!.Initialize(
+      EntityType.CashRegister,
+    ).WithOperation(SqlReadOperation.SelectByField);
+
+    if (!builder.WithField) throw new Error("WithField no implementado");
+
+    const readCommand = builder.WithField(field, value).BuildReader();
+
+    const rows = await this._connection.executeQuery(readCommand);
+    if (!rows || rows.length === 0) return [];
+
+    return rows.map(
+      (row) =>
+        ({
+          id: row["ID"],
+          company_id: row["COMPANY_ID"],
+          branch_id: row["BRANCH_ID"],
+          name: row["NAME"],
+          is_active: row["IS_ACTIVE"],
+          deleted: row["DELETED"],
+          createdAt: row["CREATEDAT"],
+          updatedAt: row["UPDATEDAT"],
+          createdBy: row["CREATEDBY"],
+          updatedBy: row["UPDATEDBY"],
+        } as CashRegister)
+    );
+  }
+
   async create(entity: CashRegister): Promise<void> {
     const writeCommand = this._operationBuilder
       .From(EntityType.CashRegister, entity)

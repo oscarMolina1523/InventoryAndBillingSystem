@@ -1,8 +1,9 @@
-import CashRegister from '../entities/cashregister';
+import CashRegister from "../entities/cashregister";
 
 export interface ICashRegisterRepository {
   findAll(page: number, pageSize: number): Promise<CashRegister[]>;
   findById(id: string): Promise<CashRegister | null>;
+  findByField(field: string, value: string): Promise<CashRegister[]>;
   create(data: CashRegister): Promise<void>;
   update(data: CashRegister): Promise<void>;
   delete(data: CashRegister): Promise<void>;

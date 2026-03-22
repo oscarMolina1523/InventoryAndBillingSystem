@@ -134,5 +134,36 @@ export const CashRegisterPaths = {
         }
       }
     }
-  }
+  },
+
+  "/cashregister/company/{companyId}": {
+    get: {
+      summary: "Get CashRegister by company ID",
+      tags: ["CashRegister"],
+      parameters: [
+        {
+          name: "companyId",
+          in: "path",
+          required: true,
+          schema: { type: "string" },
+        },
+      ],
+      responses: {
+        200: {
+          description: "CashRegister found",
+          content: {
+            "application/json": {
+              schema:{
+                type: "array",
+                items: { $ref: "#/components/schemas/CashRegister" },
+              }
+            },
+          },
+        },
+        404: {
+          description: "Not found",
+        },
+      },
+    },
+  },
 };
