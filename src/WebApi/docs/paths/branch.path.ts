@@ -10,9 +10,9 @@ export const BranchPaths = {
           required: false,
           schema: {
             type: "integer",
-            example: 1
+            example: 1,
           },
-          description: "Page number"
+          description: "Page number",
         },
         {
           name: "pageSize",
@@ -20,10 +20,10 @@ export const BranchPaths = {
           required: false,
           schema: {
             type: "integer",
-            example: 100
+            example: 100,
           },
-          description: "Number of records per page"
-        }
+          description: "Number of records per page",
+        },
       ],
       responses: {
         200: {
@@ -32,12 +32,12 @@ export const BranchPaths = {
             "application/json": {
               schema: {
                 type: "array",
-                items: { $ref: "#/components/schemas/Branch" }
-              }
-            }
-          }
-        }
-      }
+                items: { $ref: "#/components/schemas/Branch" },
+              },
+            },
+          },
+        },
+      },
     },
     post: {
       summary: "Create Branch",
@@ -46,16 +46,16 @@ export const BranchPaths = {
         required: true,
         content: {
           "application/json": {
-            schema: { $ref: "#/components/schemas/BranchRequest" }
-          }
-        }
+            schema: { $ref: "#/components/schemas/BranchRequest" },
+          },
+        },
       },
       responses: {
         201: {
-          description: "Branch created"
-        }
-      }
-    }
+          description: "Branch created",
+        },
+      },
+    },
   },
 
   "/branch/{id}": {
@@ -67,22 +67,22 @@ export const BranchPaths = {
           name: "id",
           in: "path",
           required: true,
-          schema: { type: "string" }
-        }
+          schema: { type: "string" },
+        },
       ],
       responses: {
         200: {
           description: "Branch found",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/Branch" }
-            }
-          }
+              schema: { $ref: "#/components/schemas/Branch" },
+            },
+          },
         },
         404: {
-          description: "Not found"
-        }
-      }
+          description: "Not found",
+        },
+      },
     },
 
     put: {
@@ -93,25 +93,25 @@ export const BranchPaths = {
           name: "id",
           in: "path",
           required: true,
-          schema: { type: "string" }
-        }
+          schema: { type: "string" },
+        },
       ],
       requestBody: {
         required: true,
         content: {
           "application/json": {
-            schema: { $ref: "#/components/schemas/BranchRequest" }
-          }
-        }
+            schema: { $ref: "#/components/schemas/BranchRequest" },
+          },
+        },
       },
       responses: {
         200: {
-          description: "Branch updated"
+          description: "Branch updated",
         },
         404: {
-          description: "Not found"
-        }
-      }
+          description: "Not found",
+        },
+      },
     },
 
     delete: {
@@ -122,18 +122,18 @@ export const BranchPaths = {
           name: "id",
           in: "path",
           required: true,
-          schema: { type: "string" }
-        }
+          schema: { type: "string" },
+        },
       ],
       responses: {
         204: {
-          description: "Branch deleted"
+          description: "Branch deleted",
         },
         404: {
-          description: "Not found"
-        }
-      }
-    }
+          description: "Not found",
+        },
+      },
+    },
   },
 
   "/branch/company/{companyId}": {
@@ -153,7 +153,10 @@ export const BranchPaths = {
           description: "Branch found",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/Branch" },
+              schema: {
+                type: "array",
+                items:{ $ref: "#/components/schemas/Branch" },
+              },
             },
           },
         },

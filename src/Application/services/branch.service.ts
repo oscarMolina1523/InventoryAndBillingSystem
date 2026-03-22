@@ -21,7 +21,7 @@ export class BranchService implements IBranchService {
     return await this._branchRepository.findById(id);
   }
 
-  async getByCompany(companyId: string): Promise<Branch | null> {
+  async getByCompany(companyId: string): Promise<Branch[]> {
     return await this._branchRepository.findByField("company_id", companyId);
   }
 

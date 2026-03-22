@@ -39,10 +39,10 @@ export class BranchController {
     }
 
     try {
-      const product = await this._branchService.getByCompany(companyId);
+      const branches = await this._branchService.getByCompany(companyId);
 
-      if (product) {
-        res.status(200).json({ success: true, data: product });
+      if (branches) {
+        res.status(200).json({ success: true, data: branches });
       } else {
         res.status(404).json({ message: "Branch not found" });
       }

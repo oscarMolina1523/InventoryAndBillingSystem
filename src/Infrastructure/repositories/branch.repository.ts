@@ -80,7 +80,7 @@ export class BranchRepository implements IBranchRepository {
     } as Branch;
   }
 
-  async findByField(field: string, value: string): Promise<Branch | null> {
+  async findByField(field: string, value: string): Promise<Branch[]> {
     const builder = this._operationBuilder!.Initialize(
       EntityType.Branch,
     ).WithOperation(SqlReadOperation.SelectByField);
@@ -89,21 +89,24 @@ export class BranchRepository implements IBranchRepository {
 
     const readCommand = builder.WithField(field, value).BuildReader();
 
-    const row = await this._connection.executeScalar(readCommand);
-    if (!row) return null;
+    const rows = await this._connection.executeQuery(readCommand);
+    if (!rows || rows.length === 0) return [];
 
-    return {
-      id: row["ID"],
-      company_id: row["COMPANY_ID"],
-      name: row["NAME"],
-      address: row["ADDRESS"],
-      phone: row["PHONE"],
-      deleted: row["DELETED"],
-      createdAt: row["CREATEDAT"],
-      updatedAt: row["UPDATEDAT"],
-      createdBy: row["CREATEDBY"],
-      updatedBy: row["UPDATEDBY"],
-    } as Branch;
+    return rows.map(
+      (row) =>
+        ({
+          id: row["ID"],
+          company_id: row["COMPANY_ID"],
+          name: row["NAME"],
+          address: row["ADDRESS"],
+          phone: row["PHONE"],
+          deleted: row["DELETED"],
+          createdAt: row["CREATEDAT"],
+          updatedAt: row["UPDATEDAT"],
+          createdBy: row["CREATEDBY"],
+          updatedBy: row["UPDATEDBY"],
+        } as Branch)
+    );
   }
 
   async create(entity: Branch): Promise<void> {
