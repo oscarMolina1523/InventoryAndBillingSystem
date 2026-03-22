@@ -78,7 +78,7 @@ export class RoleRepository implements IRoleRepository {
     } as Role;
   }
 
-  async findByField(field: string, value: string): Promise<Role | null> {
+  async findByField(field: string, value: string): Promise<Role[]> {
     const builder = this._operationBuilder!.Initialize(
       EntityType.Role,
     ).WithOperation(SqlReadOperation.SelectByField);
@@ -86,20 +86,23 @@ export class RoleRepository implements IRoleRepository {
     if (!builder.WithField) throw new Error("WithField no implementado");
 
     const readCommand = builder.WithField(field, value).BuildReader();
-    const row = await this._connection.executeScalar(readCommand);
-    if (!row) return null;
+    const rows = await this._connection.executeQuery(readCommand);
+    if (!rows || rows.length === 0) return [];
 
-    return {
-      id: row["ID"],
-      company_id: row["COMPANY_ID"],
-      name: row["NAME"],
-      description: row["DESCRIPTION"],
-      deleted: row["DELETED"],
-      createdAt: row["CREATEDAT"],
-      updatedAt: row["UPDATEDAT"],
-      createdBy: row["CREATEDBY"],
-      updatedBy: row["UPDATEDBY"],
-    } as Role;
+    return rows.map(
+      (row) =>
+        ({
+          id: row["ID"],
+          company_id: row["COMPANY_ID"],
+          name: row["NAME"],
+          description: row["DESCRIPTION"],
+          deleted: row["DELETED"],
+          createdAt: row["CREATEDAT"],
+          updatedAt: row["UPDATEDAT"],
+          createdBy: row["CREATEDBY"],
+          updatedBy: row["UPDATEDBY"],
+        }) as Role,
+    );
   }
 
   async create(entity: Role): Promise<void> {

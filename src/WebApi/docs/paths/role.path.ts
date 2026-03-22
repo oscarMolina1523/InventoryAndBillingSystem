@@ -153,7 +153,10 @@ export const RolePaths = {
           description: "Suscription found",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/Role" },
+              schema:{
+                type: "array",
+                items: { $ref: "#/components/schemas/Role" },
+              }
             },
           },
         },

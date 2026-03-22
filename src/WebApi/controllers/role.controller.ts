@@ -39,10 +39,10 @@ export class RoleController {
     }
 
     try {
-      const product = await this._roleService.getByCompany(companyId);
+      const roles = await this._roleService.getByCompany(companyId);
 
-      if (product) {
-        res.status(200).json({ success: true, data: product });
+      if (roles) {
+        res.status(200).json({ success: true, data: roles });
       } else {
         res.status(404).json({ message: "Role not found" });
       }

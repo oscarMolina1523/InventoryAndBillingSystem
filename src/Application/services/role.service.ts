@@ -21,7 +21,7 @@ export class RoleService implements IRoleService {
     return await this._roleRepository.findById(id);
   }
 
-  async getByCompany(companyId: string): Promise<Role | null> {
+  async getByCompany(companyId: string): Promise<Role []> {
       return await this._roleRepository.findByField("company_id", companyId);
     }
   
