@@ -153,7 +153,10 @@ export const UserPaths = {
           description: "Branch found",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/User" },
+              schema:{
+                type: "array",
+                items: { $ref: "#/components/schemas/User" },
+              }
             },
           },
         },

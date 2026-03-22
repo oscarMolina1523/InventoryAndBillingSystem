@@ -84,7 +84,7 @@ export class UserRepository implements IUserRepository {
     } as User;
   }
 
-  async findByField(field: string, value: string): Promise<User | null> {
+  async findByField(field: string, value: string): Promise<User[]> {
     const builder = this._operationBuilder!.Initialize(
       EntityType.User,
     ).WithOperation(SqlReadOperation.SelectByField);
@@ -93,23 +93,26 @@ export class UserRepository implements IUserRepository {
 
     const readCommand = builder.WithField(field, value).BuildReader();
 
-    const row = await this._connection.executeScalar(readCommand);
-    if (!row) return null;
+    const rows = await this._connection.executeQuery(readCommand);
+    if (!rows || rows.length === 0) return [];
 
-    return {
-      id: row["ID"],
-      company_id: row["COMPANY_ID"],
-      name: row["NAME"],
-      email: row["EMAIL"],
-      password: row["PASSWORD"],
-      role_id: row["ROLE_ID"],
-      is_active: row["IS_ACTIVE"],
-      deleted: row["DELETED"],
-      createdAt: row["CREATEDAT"],
-      updatedAt: row["UPDATEDAT"],
-      createdBy: row["CREATEDBY"],
-      updatedBy: row["UPDATEDBY"],
-    } as User;
+    return rows.map(
+      (row) =>
+        ({
+          id: row["ID"],
+          company_id: row["COMPANY_ID"],
+          name: row["NAME"],
+          email: row["EMAIL"],
+          password: row["PASSWORD"],
+          role_id: row["ROLE_ID"],
+          is_active: row["IS_ACTIVE"],
+          deleted: row["DELETED"],
+          createdAt: row["CREATEDAT"],
+          updatedAt: row["UPDATEDAT"],
+          createdBy: row["CREATEDBY"],
+          updatedBy: row["UPDATEDBY"],
+        }) as User,
+    );
   }
 
   async create(entity: User): Promise<void> {

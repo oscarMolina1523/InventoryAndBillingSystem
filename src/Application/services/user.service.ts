@@ -21,7 +21,7 @@ export class UserService implements IUserService {
     return await this._userRepository.findById(id);
   }
 
-  async getByCompany(companyId: string): Promise<User | null> {
+  async getByCompany(companyId: string): Promise<User []> {
     return await this._userRepository.findByField("company_id", companyId);
   }
 

@@ -39,10 +39,10 @@ export class UserController {
     }
 
     try {
-      const product = await this._userService.getByCompany(companyId);
+      const users = await this._userService.getByCompany(companyId);
 
-      if (product) {
-        res.status(200).json({ success: true, data: product });
+      if (users) {
+        res.status(200).json({ success: true, data: users });
       } else {
         res.status(404).json({ message: "User not found" });
       }
