@@ -12,25 +12,29 @@ export class UserService implements IUserService {
   constructor(@inject("IUserRepository") repository: IUserRepository) {
     this._userRepository = repository;
   }
-  
+
   async findAll(page: number = 1, pageSize: number = 100): Promise<User[]> {
     return await this._userRepository.findAll(page, pageSize);
   }
-  
-  async findById(id: string) : Promise<User | null> {
+
+  async findById(id: string): Promise<User | null> {
     return await this._userRepository.findById(id);
   }
-  
+
+  async getByCompany(companyId: string): Promise<User | null> {
+    return await this._userRepository.findByField("company_id", companyId);
+  }
+
   async create(data: UserDto): Promise<User> {
     const now = new Date();
     const newData: User = {
       ...data,
-      id: generateId(), 
+      id: generateId(),
       createdAt: now,
-      updatedAt: now, 
-      createdBy: "system", 
-      updatedBy: "system", 
-    }
+      updatedAt: now,
+      createdBy: "system",
+      updatedBy: "system",
+    };
     await this._userRepository.create(newData);
     return newData;
   }
@@ -44,20 +48,20 @@ export class UserService implements IUserService {
     const now = new Date();
     const newData: User = {
       ...data,
-      id, 
+      id,
       createdAt: now,
-      updatedAt: now, 
-      createdBy: "system", 
-      updatedBy: "system", 
-    }
+      updatedAt: now,
+      createdBy: "system",
+      updatedBy: "system",
+    };
     await this._userRepository.update(newData);
     return newData;
   }
 
-  async delete(id: string) : Promise<void> {
+  async delete(id: string): Promise<void> {
     const existing = await this._userRepository.findById(id);
     if (!existing) {
-      return ;
+      return;
     }
     return await this._userRepository.delete(existing);
   }

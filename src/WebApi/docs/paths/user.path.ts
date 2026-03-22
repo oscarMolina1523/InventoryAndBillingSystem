@@ -134,5 +134,33 @@ export const UserPaths = {
         }
       }
     }
-  }
+  },
+
+  "/user/company/{companyId}": {
+    get: {
+      summary: "Get User by company ID",
+      tags: ["User"],
+      parameters: [
+        {
+          name: "companyId",
+          in: "path",
+          required: true,
+          schema: { type: "string" },
+        },
+      ],
+      responses: {
+        200: {
+          description: "Branch found",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/User" },
+            },
+          },
+        },
+        404: {
+          description: "Not found",
+        },
+      },
+    },
+  },
 };
