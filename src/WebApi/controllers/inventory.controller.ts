@@ -29,6 +29,29 @@ export class InventoryController {
     res.json(result);
   }
 
+  getInventoryByCompany = async (req: Request, res: Response) => {
+    //http://localhost:3000/users/company/123
+
+    const companyId = req.params.companyId;
+
+    if (!companyId || typeof companyId !== "string") {
+      return res.status(400).json({ message: "Invalid Company ID." });
+    }
+
+    try {
+      const inventories = await this._inventoryService.getByCompany(companyId);
+
+      if (inventories) {
+        res.status(200).json({ success: true, data: inventories });
+      } else {
+        res.status(404).json({ message: "Inventory not found" });
+      }
+    } catch {
+      res.status(500).json({ message: "Failed to get inventory" });
+    }
+  };
+
+
   update= async (req: Request, res: Response)=> {
     const id = req.params.id as string;
     const result = await this._inventoryService.update(id, req.body);

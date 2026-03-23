@@ -134,5 +134,36 @@ export const InventoryPaths = {
         }
       }
     }
-  }
+  },
+
+  "/inventory/company/{companyId}": {
+    get: {
+      summary: "Get Inventory by company ID",
+      tags: ["Inventory"],
+      parameters: [
+        {
+          name: "companyId",
+          in: "path",
+          required: true,
+          schema: { type: "string" },
+        },
+      ],
+      responses: {
+        200: {
+          description: "Inventory found",
+          content: {
+            "application/json": {
+              schema:{
+                type: "array",
+                items: { $ref: "#/components/schemas/Inventory" },
+              }
+            },
+          },
+        },
+        404: {
+          description: "Not found",
+        },
+      },
+    },
+  },
 };
