@@ -134,5 +134,36 @@ export const SalePaths = {
         }
       }
     }
-  }
+  },
+
+  "/sale/company/{companyId}": {
+    get: {
+      summary: "Get Sales by company ID",
+      tags: ["Sale"],
+      parameters: [
+        {
+          name: "companyId",
+          in: "path",
+          required: true,
+          schema: { type: "string" },
+        },
+      ],
+      responses: {
+        200: {
+          description: "Sales found",
+          content: {
+            "application/json": {
+              schema:{
+                type: "array",
+                items: { $ref: "#/components/schemas/Sale" },
+              }
+            },
+          },
+        },
+        404: {
+          description: "Not found",
+        },
+      },
+    },
+  },
 };

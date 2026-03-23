@@ -84,6 +84,37 @@ export class SaleRepository implements ISaleRepository {
     } as Sale;
   }
 
+  async findByField(field: string, value: string): Promise<Sale[]> {
+    const builder = this._operationBuilder!.Initialize(
+      EntityType.Sale,
+    ).WithOperation(SqlReadOperation.SelectByField);
+
+    if (!builder.WithField) throw new Error("WithField no implementado");
+
+    const readCommand = builder.WithField(field, value).BuildReader();
+
+    const rows = await this._connection.executeQuery(readCommand);
+    if (!rows || rows.length === 0) return [];
+
+    return rows.map(
+      (row) =>
+        ({
+          id: row["ID"],
+          company_id: row["COMPANY_ID"],
+          branch_id: row["BRANCH_ID"],
+          user_id: row["USER_ID"],
+          customer_name: row["CUSTOMER_NAME"],
+          total: row["TOTAL"],
+          status: row["STATUS"],
+          createdAt: row["CREATEDAT"],
+          updatedAt: row["UPDATEDAT"],
+          createdBy: row["CREATEDBY"],
+          updatedBy: row["UPDATEDBY"],
+          deleted: row["DELETED"],
+        }) as Sale,
+    );
+  }
+
   async create(entity: Sale): Promise<void> {
     const writeCommand = this._operationBuilder
       .From(EntityType.Sale, entity)

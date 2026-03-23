@@ -12,25 +12,29 @@ export class SaleService implements ISaleService {
   constructor(@inject("ISaleRepository") repository: ISaleRepository) {
     this._saleRepository = repository;
   }
-  
+
   async findAll(page: number = 1, pageSize: number = 100): Promise<Sale[]> {
     return await this._saleRepository.findAll(page, pageSize);
   }
-  
-  async findById(id: string) : Promise<Sale | null> {
+
+  async findById(id: string): Promise<Sale | null> {
     return await this._saleRepository.findById(id);
   }
-  
+
+  async getByCompany(companyId: string): Promise<Sale[]> {
+    return await this._saleRepository.findByField("company_id", companyId);
+  }
+
   async create(data: SaleDto): Promise<Sale> {
     const now = new Date();
     const newData: Sale = {
       ...data,
-      id: generateId(), 
+      id: generateId(),
       createdAt: now,
-      updatedAt: now, 
-      createdBy: "system", 
-      updatedBy: "system", 
-    }
+      updatedAt: now,
+      createdBy: "system",
+      updatedBy: "system",
+    };
     await this._saleRepository.create(newData);
     return newData;
   }
@@ -44,20 +48,20 @@ export class SaleService implements ISaleService {
     const now = new Date();
     const newData: Sale = {
       ...data,
-      id, 
+      id,
       createdAt: now,
-      updatedAt: now, 
-      createdBy: "system", 
-      updatedBy: "system", 
-    }
+      updatedAt: now,
+      createdBy: "system",
+      updatedBy: "system",
+    };
     await this._saleRepository.update(newData);
     return newData;
   }
 
-  async delete(id: string) : Promise<void> {
+  async delete(id: string): Promise<void> {
     const existing = await this._saleRepository.findById(id);
     if (!existing) {
-      return ;
+      return;
     }
     return await this._saleRepository.delete(existing);
   }
