@@ -89,6 +89,41 @@ export class InventoryMovementRepository implements IInventoryMovementRepository
     } as InventoryMovement;
   }
 
+  async findByField(
+    field: string,
+    value: string,
+  ): Promise<InventoryMovement[]> {
+    const builder = this._operationBuilder!.Initialize(
+      EntityType.InventoryMovement,
+    ).WithOperation(SqlReadOperation.SelectByField);
+
+    if (!builder.WithField) throw new Error("WithField no implementado");
+
+    const readCommand = builder.WithField(field, value).BuildReader();
+
+    const rows = await this._connection.executeQuery(readCommand);
+    if (!rows || rows.length === 0) return [];
+
+    return rows.map(
+      (row) =>
+        ({
+          id: row["ID"],
+          company_id: row["COMPANY_ID"],
+          branch_id: row["BRANCH_ID"],
+          product_id: row["PRODUCT_ID"],
+          type: row["TYPE"],
+          quantity: row["QUANTITY"],
+          reference_type: row["REFERENCE_TYPE"],
+          reference_id: row["REFERENCE_ID"],
+          description: row["DESCRIPTION"],
+          createdAt: row["CREATEDAT"],
+          updatedAt: row["UPDATEDAT"],
+          createdBy: row["CREATEDBY"],
+          updatedBy: row["UPDATEDBY"],
+        }) as InventoryMovement,
+    );
+  }
+
   async create(entity: InventoryMovement): Promise<void> {
     const writeCommand = this._operationBuilder
       .From(EntityType.InventoryMovement, entity)

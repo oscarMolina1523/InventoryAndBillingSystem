@@ -9,33 +9,49 @@ import { generateId } from "../../shared/utils/generateId";
 export class InventoryMovementService implements IInventoryMovementService {
   private readonly _inventorymovementRepository: IInventoryMovementRepository;
 
-  constructor(@inject("IInventoryMovementRepository") repository: IInventoryMovementRepository) {
+  constructor(
+    @inject("IInventoryMovementRepository")
+    repository: IInventoryMovementRepository,
+  ) {
     this._inventorymovementRepository = repository;
   }
-  
-  async findAll(page: number = 1, pageSize: number = 100): Promise<InventoryMovement[]> {
+
+  async findAll(
+    page: number = 1,
+    pageSize: number = 100,
+  ): Promise<InventoryMovement[]> {
     return await this._inventorymovementRepository.findAll(page, pageSize);
   }
-  
-  async findById(id: string) : Promise<InventoryMovement | null> {
+
+  async findById(id: string): Promise<InventoryMovement | null> {
     return await this._inventorymovementRepository.findById(id);
   }
-  
+
+  async getByCompany(companyId: string): Promise<InventoryMovement[]> {
+    return await this._inventorymovementRepository.findByField(
+      "company_id",
+      companyId,
+    );
+  }
+
   async create(data: InventoryMovementDto): Promise<InventoryMovement> {
     const now = new Date();
     const newData: InventoryMovement = {
       ...data,
-      id: generateId(), 
+      id: generateId(),
       createdAt: now,
-      updatedAt: now, 
-      createdBy: "system", 
-      updatedBy: "system", 
-    }
+      updatedAt: now,
+      createdBy: "system",
+      updatedBy: "system",
+    };
     await this._inventorymovementRepository.create(newData);
     return newData;
   }
 
-  async update(id: string, data: InventoryMovementDto): Promise<InventoryMovement | null> {
+  async update(
+    id: string,
+    data: InventoryMovementDto,
+  ): Promise<InventoryMovement | null> {
     const existing = await this._inventorymovementRepository.findById(id);
     if (!existing) {
       return null;
@@ -44,20 +60,20 @@ export class InventoryMovementService implements IInventoryMovementService {
     const now = new Date();
     const newData: InventoryMovement = {
       ...data,
-      id, 
+      id,
       createdAt: now,
-      updatedAt: now, 
-      createdBy: "system", 
-      updatedBy: "system", 
-    }
+      updatedAt: now,
+      createdBy: "system",
+      updatedBy: "system",
+    };
     await this._inventorymovementRepository.update(newData);
     return newData;
   }
 
-  async delete(id: string) : Promise<void> {
+  async delete(id: string): Promise<void> {
     const existing = await this._inventorymovementRepository.findById(id);
     if (!existing) {
-      return ;
+      return;
     }
     return await this._inventorymovementRepository.delete(existing);
   }

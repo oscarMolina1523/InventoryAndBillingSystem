@@ -134,5 +134,36 @@ export const InventoryMovementPaths = {
         }
       }
     }
-  }
+  },
+
+  "/inventorymovement/company/{companyId}": {
+    get: {
+      summary: "Get InventoryMovement by company ID",
+      tags: ["InventoryMovement"],
+      parameters: [
+        {
+          name: "companyId",
+          in: "path",
+          required: true,
+          schema: { type: "string" },
+        },
+      ],
+      responses: {
+        200: {
+          description: "InventoryMovement found",
+          content: {
+            "application/json": {
+              schema:{
+                type: "array",
+                items: { $ref: "#/components/schemas/InventoryMovement" },
+              }
+            },
+          },
+        },
+        404: {
+          description: "Not found",
+        },
+      },
+    },
+  },
 };
