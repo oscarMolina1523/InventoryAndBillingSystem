@@ -134,5 +134,36 @@ export const CashMovementPaths = {
         }
       }
     }
-  }
+  },
+
+  "/cashmovement/company/{companyId}": {
+    get: {
+      summary: "Get CashMovement by company ID",
+      tags: ["CashMovement"],
+      parameters: [
+        {
+          name: "companyId",
+          in: "path",
+          required: true,
+          schema: { type: "string" },
+        },
+      ],
+      responses: {
+        200: {
+          description: "CashMovement found",
+          content: {
+            "application/json": {
+              schema:{
+                type: "array",
+                items: { $ref: "#/components/schemas/CashMovement" },
+              }
+            },
+          },
+        },
+        404: {
+          description: "Not found",
+        },
+      },
+    },
+  },
 };

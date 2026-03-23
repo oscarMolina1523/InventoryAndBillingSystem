@@ -89,6 +89,37 @@ export class CashMovementRepository implements ICashMovementRepository {
     } as CashMovement;
   }
 
+  async findByField(field: string, value: string): Promise<CashMovement[]> {
+    const builder = this._operationBuilder!.Initialize(
+      EntityType.CashMovement,
+    ).WithOperation(SqlReadOperation.SelectByField);
+
+    if (!builder.WithField) throw new Error("WithField no implementado");
+
+    const readCommand = builder.WithField(field, value).BuildReader();
+    const rows = await this._connection.executeQuery(readCommand);
+    if (!rows || rows.length === 0) return [];
+
+    return rows.map(
+      (row) =>
+        ({
+          id: row["ID"],
+          company_id: row["COMPANY_ID"],
+          cash_register_id: row["CASH_REGISTER_ID"],
+          type: row["TYPE"],
+          amount: row["AMOUNT"],
+          description: row["DESCRIPTION"],
+          reference_id: row["REFERENCE_ID"],
+          payment_method: row["PAYMENT_METHOD"],
+          createdAt: row["CREATEDAT"],
+          updatedAt: row["UPDATEDAT"],
+          createdBy: row["CREATEDBY"],
+          updatedBy: row["UPDATEDBY"],
+          deleted: row["DELETED"],
+        }) as CashMovement,
+    );
+  }
+
   async create(entity: CashMovement): Promise<void> {
     const writeCommand = this._operationBuilder
       .From(EntityType.CashMovement, entity)
