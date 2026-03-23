@@ -1,7 +1,7 @@
 /* AUTO-GENERATED-IMPORTS START */
 import { injectable, inject } from "tsyringe";
 import { IPurchaseItemRepository } from "../../Domain/repositories/purchaseitemRepository.interface";
-import Purchaseitem from "../../Domain/entities/purchaseitem";
+import PurchaseItem from "../../Domain/entities/purchaseitem";
 import { EntityType } from "../utils/entityTypes";
 import {
   SqlReadOperation,
@@ -32,7 +32,7 @@ export class PurchaseItemRepository implements IPurchaseItemRepository {
   async findAll(
     page: number = 1,
     pageSize: number = 100,
-  ): Promise<Purchaseitem[]> {
+  ): Promise<PurchaseItem[]> {
     const offset = (page - 1) * pageSize;
 
     const readCommand = this._operationBuilder
@@ -57,11 +57,11 @@ export class PurchaseItemRepository implements IPurchaseItemRepository {
           updatedAt: row["UPDATEDAT"],
           createdBy: row["CREATEDBY"],
           updatedBy: row["UPDATEDBY"],
-        }) as Purchaseitem,
+        }) as PurchaseItem,
     );
   }
 
-  async findById(id: string): Promise<Purchaseitem | null> {
+  async findById(id: string): Promise<PurchaseItem | null> {
     const readCommand = this._operationBuilder
       .Initialize(EntityType.PurchaseItem)
       .WithOperation(SqlReadOperation.SelectById)
@@ -84,10 +84,41 @@ export class PurchaseItemRepository implements IPurchaseItemRepository {
       updatedAt: row["UPDATEDAT"],
       createdBy: row["CREATEDBY"],
       updatedBy: row["UPDATEDBY"],
-    } as Purchaseitem;
+    } as PurchaseItem;
   }
 
-  async create(entity: Purchaseitem): Promise<void> {
+  async findByField(field: string, value: string): Promise<PurchaseItem[]> {
+    const builder = this._operationBuilder!.Initialize(
+      EntityType.PurchaseItem,
+    ).WithOperation(SqlReadOperation.SelectByField);
+
+    if (!builder.WithField) throw new Error("WithField no implementado");
+
+    const readCommand = builder.WithField(field, value).BuildReader();
+
+    const rows = await this._connection.executeQuery(readCommand);
+    if (!rows || rows.length === 0) return [];
+
+    return rows.map(
+      (row) =>
+        ({
+          id: row["ID"],
+          company_id: row["COMPANY_ID"],
+          purchase_id: row["PURCHASE_ID"],
+          product_id: row["PRODUCT_ID"],
+          unit_id: row["UNIT_ID"],
+          quantity: row["QUANTITY"],
+          cost_price: row["COST_PRICE"],
+          subtotal: row["SUBTOTAL"],
+          createdAt: row["CREATEDAT"],
+          updatedAt: row["UPDATEDAT"],
+          createdBy: row["CREATEDBY"],
+          updatedBy: row["UPDATEDBY"],
+        }) as PurchaseItem,
+    );
+  }
+
+  async create(entity: PurchaseItem): Promise<void> {
     const writeCommand = this._operationBuilder
       .From(EntityType.PurchaseItem, entity)
       .WithOperation(SqlWriteOperation.Create)
@@ -96,7 +127,7 @@ export class PurchaseItemRepository implements IPurchaseItemRepository {
     await this._connection.executeNonQuery(writeCommand);
   }
 
-  async update(entity: Purchaseitem): Promise<void> {
+  async update(entity: PurchaseItem): Promise<void> {
     const writeCommand = this._operationBuilder
       .From(EntityType.PurchaseItem, entity)
       .WithOperation(SqlWriteOperation.Update)
@@ -105,7 +136,7 @@ export class PurchaseItemRepository implements IPurchaseItemRepository {
     await this._connection.executeNonQuery(writeCommand);
   }
 
-  async delete(entity: Purchaseitem): Promise<void> {
+  async delete(entity: PurchaseItem): Promise<void> {
     const writeCommand = this._operationBuilder
       .From(EntityType.PurchaseItem, entity)
       .WithOperation(SqlWriteOperation.Delete)

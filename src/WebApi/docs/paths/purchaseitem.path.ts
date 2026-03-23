@@ -134,5 +134,36 @@ export const PurchaseItemPaths = {
         }
       }
     }
-  }
+  },
+
+  "/purchaseitem/company/{companyId}": {
+    get: {
+      summary: "Get PurchaseItem by company ID",
+      tags: ["PurchaseItem"],
+      parameters: [
+        {
+          name: "companyId",
+          in: "path",
+          required: true,
+          schema: { type: "string" },
+        },
+      ],
+      responses: {
+        200: {
+          description: "PurchaseItem found",
+          content: {
+            "application/json": {
+              schema:{
+                type: "array",
+                items: { $ref: "#/components/schemas/PurchaseItem" },
+              }
+            },
+          },
+        },
+        404: {
+          description: "Not found",
+        },
+      },
+    },
+  },
 };
