@@ -20,6 +20,13 @@ export class SaleItemService implements ISaleItemService {
   async findById(id: string) : Promise<SaleItem | null> {
     return await this._saleitemRepository.findById(id);
   }
+
+  async getByCompany(companyId: string): Promise<SaleItem[]> {
+      return await this._saleitemRepository.findByField(
+        "company_id",
+        companyId,
+      );
+    }
   
   async create(data: SaleItemDto): Promise<SaleItem> {
     const now = new Date();

@@ -134,5 +134,36 @@ export const SaleItemPaths = {
         }
       }
     }
-  }
+  },
+
+  "/saleitem/company/{companyId}": {
+    get: {
+      summary: "Get SaleItem by company ID",
+      tags: ["SaleItem"],
+      parameters: [
+        {
+          name: "companyId",
+          in: "path",
+          required: true,
+          schema: { type: "string" },
+        },
+      ],
+      responses: {
+        200: {
+          description: "SaleItem found",
+          content: {
+            "application/json": {
+              schema:{
+                type: "array",
+                items: { $ref: "#/components/schemas/SaleItem" },
+              }
+            },
+          },
+        },
+        404: {
+          description: "Not found",
+        },
+      },
+    },
+  },
 };

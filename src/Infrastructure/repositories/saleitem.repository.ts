@@ -1,7 +1,7 @@
 /* AUTO-GENERATED-IMPORTS START */
 import { injectable, inject } from "tsyringe";
 import { ISaleItemRepository } from "../../Domain/repositories/saleitemRepository.interface";
-import Saleitem from "../../Domain/entities/saleitem";
+import SaleItem from "../../Domain/entities/saleitem";
 import { EntityType } from "../utils/entityTypes";
 import {
   SqlReadOperation,
@@ -29,7 +29,7 @@ export class SaleItemRepository implements ISaleItemRepository {
   /* AUTO-GENERATED-CONSTRUCTOR END */
 
   /* AUTO-GENERATED-METHODS START */
-  async findAll(page: number = 1, pageSize: number = 100): Promise<Saleitem[]> {
+  async findAll(page: number = 1, pageSize: number = 100): Promise<SaleItem[]> {
     const offset = (page - 1) * pageSize;
 
     const readCommand = this._operationBuilder
@@ -54,11 +54,11 @@ export class SaleItemRepository implements ISaleItemRepository {
           updatedAt: row["UPDATEDAT"],
           createdBy: row["CREATEDBY"],
           updatedBy: row["UPDATEDBY"],
-        }) as Saleitem,
+        }) as SaleItem,
     );
   }
 
-  async findById(id: string): Promise<Saleitem | null> {
+  async findById(id: string): Promise<SaleItem | null> {
     const readCommand = this._operationBuilder
       .Initialize(EntityType.SaleItem)
       .WithOperation(SqlReadOperation.SelectById)
@@ -81,10 +81,41 @@ export class SaleItemRepository implements ISaleItemRepository {
       updatedAt: row["UPDATEDAT"],
       createdBy: row["CREATEDBY"],
       updatedBy: row["UPDATEDBY"],
-    } as Saleitem;
+    } as SaleItem;
   }
 
-  async create(entity: Saleitem): Promise<void> {
+  async findByField(field: string, value: string): Promise<SaleItem[]> {
+    const builder = this._operationBuilder!.Initialize(
+      EntityType.SaleItem,
+    ).WithOperation(SqlReadOperation.SelectByField);
+
+    if (!builder.WithField) throw new Error("WithField no implementado");
+
+    const readCommand = builder.WithField(field, value).BuildReader();
+
+    const rows = await this._connection.executeQuery(readCommand);
+    if (!rows || rows.length === 0) return [];
+
+    return rows.map(
+      (row) =>
+        ({
+          id: row["ID"],
+          company_id: row["COMPANY_ID"],
+          sale_id: row["SALE_ID"],
+          product_id: row["PRODUCT_ID"],
+          unit_id: row["UNIT_ID"],
+          quantity: row["QUANTITY"],
+          price: row["PRICE"],
+          subtotal: row["SUBTOTAL"],
+          createdAt: row["CREATEDAT"],
+          updatedAt: row["UPDATEDAT"],
+          createdBy: row["CREATEDBY"],
+          updatedBy: row["UPDATEDBY"],
+        }) as SaleItem,
+    );
+  }
+
+  async create(entity: SaleItem): Promise<void> {
     const writeCommand = this._operationBuilder
       .From(EntityType.SaleItem, entity)
       .WithOperation(SqlWriteOperation.Create)
@@ -93,7 +124,7 @@ export class SaleItemRepository implements ISaleItemRepository {
     await this._connection.executeNonQuery(writeCommand);
   }
 
-  async update(entity: Saleitem): Promise<void> {
+  async update(entity: SaleItem): Promise<void> {
     const writeCommand = this._operationBuilder
       .From(EntityType.SaleItem, entity)
       .WithOperation(SqlWriteOperation.Update)
@@ -102,7 +133,7 @@ export class SaleItemRepository implements ISaleItemRepository {
     await this._connection.executeNonQuery(writeCommand);
   }
 
-  async delete(entity: Saleitem): Promise<void> {
+  async delete(entity: SaleItem): Promise<void> {
     const writeCommand = this._operationBuilder
       .From(EntityType.SaleItem, entity)
       .WithOperation(SqlWriteOperation.Delete)
