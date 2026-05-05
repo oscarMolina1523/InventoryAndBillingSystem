@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { container } from "tsyringe";
 import { ILogRepository } from "./../../Domain/repositories/logRepository.interface";
 import { LogRepository } from "./../../Infrastructure/repositories/log.repository";
