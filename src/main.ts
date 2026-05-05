@@ -44,6 +44,9 @@ async function setupOpenApi() {
     })
   );
 }
+
+setupOpenApi();
+
 //AUTO-REGISTER-ROUTES
 app.use("/log", logRoutes);
 app.use("/saleitem", saleitemRoutes);
@@ -65,13 +68,4 @@ app.use("/company", companyRoutes);
 app.use("/suscription", suscriptionRoutes);
 app.use("/plan", planRoutes);
 
-async function startServer() {
-  //await initializeDatabase();
-  await setupOpenApi();
-
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
-
-startServer();
+export default app;
