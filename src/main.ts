@@ -25,8 +25,6 @@ import unitRoutes from "./WebApi/routes/unit.routes";
 import companyRoutes from "./WebApi/routes/company.routes";
 import suscriptionRoutes from "./WebApi/routes/suscription.routes";
 import planRoutes from "./WebApi/routes/plan.routes";
-//AUTO-IMPORT-OPENAPI
-import { apiReference } from "@scalar/express-api-reference";
 import { OpenApiSpecification } from "./WebApi/docs/openapi";
 
 const app = express();
@@ -36,12 +34,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 //AUTO-REGISTER-OPENAPI
-app.use(
-  "/api-docs",
-  apiReference({
-    content: OpenApiSpecification,
-  })
-);
+async function setupOpenApi() {
+  const { apiReference } = await import("@scalar/express-api-reference");
+
+  app.use(
+    "/api-docs",
+    apiReference({
+      content: OpenApiSpecification,
+    })
+  );
+}
 //AUTO-REGISTER-ROUTES
 app.use("/log", logRoutes);
 app.use("/saleitem", saleitemRoutes);
@@ -65,6 +67,7 @@ app.use("/plan", planRoutes);
 
 async function startServer() {
   //await initializeDatabase();
+  await setupOpenApi();
 
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
