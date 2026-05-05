@@ -37,12 +37,10 @@ app.use(express.json());
 
 //AUTO-REGISTER-OPENAPI
 app.use(
-	"/api-docs",
-	apiReference({
-		spec: {
-			content: OpenApiSpecification,
-		},
-	})
+  "/api-docs",
+  apiReference({
+    content: OpenApiSpecification,
+  })
 );
 //AUTO-REGISTER-ROUTES
 app.use("/log", logRoutes);
