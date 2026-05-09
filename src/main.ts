@@ -28,24 +28,33 @@ import planRoutes from "./WebApi/routes/plan.routes";
 import { OpenApiSpecification } from "./WebApi/docs/openapi";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 //AUTO-REGISTER-OPENAPI
-async function setupOpenApi() {
-  const { apiReference } = await import("@scalar/express-api-reference");
+app.get("/openapi.json", (req, res) => {
+  res.json(OpenApiSpecification);
+});
 
-  app.use(
-    "/api-docs",
-    apiReference({
+app.get("/api-docs", async (req, res, next) => {
+  try {
+    const scalar = await import("@scalar/express-api-reference");
+
+    const middleware = scalar.apiReference({
       content: OpenApiSpecification,
-    })
-  );
-}
+    }) as express.RequestHandler;
 
-setupOpenApi();
+    return middleware(req, res, next);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/", (req, res) => {
+  res.send("Billing System API working!");
+});
 
 //AUTO-REGISTER-ROUTES
 app.use("/log", logRoutes);
